@@ -1,18 +1,17 @@
-use std::{env, io::Write};
-
 use chrono::{self, *};
+
+use std::io::Write;
+
+mod password;
 
 pub fn run() {
     print!("Please enter password: ");
-    let password = load_passwords_from_env();
+    let password = password::load_passwords_from_env();
     loop {
         std::io::stdout().flush().unwrap();
         let input_password = rpassword::read_password().unwrap();
 
-        if input_password.trim() == password.one
-            || input_password.trim() == password.two
-            || input_password.trim() == password.three
-        {
+        if password.check_password(&input_password) {
             count();
             break;
         } else {
@@ -49,22 +48,4 @@ fn seconds_to_dhms(seconds: i64) -> String {
         remaining_seconds,
         "🩷 ".repeat(3)
     )
-}
-
-struct Passwords {
-    one: String,
-    two: String,
-    three: String,
-}
-
-fn load_passwords_from_env() -> Passwords {
-    let p1 = env::var("PASSWORD_ONE").unwrap();
-    let p2 = env::var("PASSWORD_TWO").unwrap();
-    let p3 = env::var("PASSWORD_THREE").unwrap();
-
-    Passwords {
-        one: p1,
-        two: p2,
-        three: p3,
-    }
 }
