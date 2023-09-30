@@ -2,11 +2,13 @@ use chrono::{self, *};
 
 use std::io::Write;
 
+use crate::password::Passwords;
+
 mod password;
 
 pub fn run() {
     print!("Please enter password: ");
-    let password = password::load_passwords_from_env();
+    let password = Passwords::load_passwords_from_env();
     loop {
         std::io::stdout().flush().unwrap();
         let input_password = rpassword::read_password().unwrap();

@@ -14,16 +14,16 @@ impl Passwords {
     pub fn check_password(&self, input_password: &String) -> bool {
         self.to_list().contains(&input_password)
     }
-}
 
-pub fn load_passwords_from_env() -> Passwords {
-    let p1 = env::var("PASSWORD_ONE").unwrap();
-    let p2 = env::var("PASSWORD_TWO").unwrap();
-    let p3 = env::var("PASSWORD_THREE").unwrap();
+    pub fn load_passwords_from_env() -> Self {
+        let p1 = env::var("PASSWORD_ONE").unwrap();
+        let p2 = env::var("PASSWORD_TWO").unwrap();
+        let p3 = env::var("PASSWORD_THREE").unwrap();
 
-    Passwords {
-        one: p1,
-        two: p2,
-        three: p3,
+        Self {
+            one: p1,
+            two: p2,
+            three: p3,
+        }
     }
 }
